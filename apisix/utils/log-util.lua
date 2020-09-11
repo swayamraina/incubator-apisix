@@ -24,7 +24,7 @@ local function get_full_log(ngx, conf)
     local service_id
     local route_id
     local url = var.scheme .. "://" .. var.host .. ":" .. var.server_port
-                .. var.request_uri
+            .. var.request_uri
     local matched_route = ctx.matched_route and ctx.matched_route.value
 
     if matched_route then
@@ -64,7 +64,11 @@ local function get_full_log(ngx, conf)
         else
             local body_file = ngx.req.get_body_file()
             if body_file then
-                log.request.body_file = body_file
+                lines = {}
+                for line in io.lines(body_file) do
+                    lines[#lines + 1] = line
+                end
+                log.request.body_file = lines
             end
         end
     end
