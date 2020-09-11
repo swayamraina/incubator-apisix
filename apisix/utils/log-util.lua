@@ -64,11 +64,7 @@ local function get_full_log(ngx, conf)
         else
             local body_file = ngx.req.get_body_file()
             if body_file then
-                lines = {}
-                for line in io.lines(body_file) do
-                    lines[#lines + 1] = line
-                end
-                log.request.body_file = lines
+                log.request.body_file = body_file
             end
         end
     end
